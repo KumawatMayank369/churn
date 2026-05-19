@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Churn Predictor</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  background: rgba(255,255,255,0.1);
+  padding: 30px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #00c6ff;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>🚀 Churn Predictor</h1>
+
+  <input type="number" id="age" placeholder="Age">
+  <input type="number" id="balance" placeholder="Balance">
+
+  <button onclick="predict()">Predict</button>
+
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+async function predict() {
+  let age = document.getElementById("age").value;
+  let balance = document.getElementById("balance").value;
+
+  let response = await fetch("https://your-app.onrender.com/predict", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      features: [600, age, 3, balance, 2, 1, 1, 50000, 0, 1, 1]
+    })
+  });
+
+  let data = await response.json();
+
+  document.getElementById("result").innerText =
+    data.prediction === 1 ? "⚠️ Customer will leave" : "✅ Customer stays";
+}
+</script>
+
+</body>
+</html>
